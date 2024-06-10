@@ -1,51 +1,38 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const form = {
-    email: document.querySelector("#loginEmail"),
-    password: document.querySelector("#loginPassword"),
-    submit: document.querySelector("#signin-btn-submit"),
-  };
 
-  form.submit.addEventListener("click", (e) => {
-    e.preventDefault();
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
 
-    const loginEndpoint = 'http://127.0.0.1:8000/api/user/login/';
+        const email = document.getElementById('email').value;
+        const name = document.getElementById('name').value;
+        const password = document.getElementById('password').value;
+        const password2 = document.getElementById('password2').value;
 
-    fetch(loginEndpoint, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: form.email.value,
-        password: form.password.value,
-      }),
-    })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Failed to login');
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data)
-      // Save token and user ID to local storage
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('userId', data.userId);
+        const formData = {
+            email: email,
+            name: name,
+            password: password,
+            password2: password2
+        };
 
-      // Show profile and logout buttons, hide register and login buttons
-      const registrationPart = document.querySelector('.registration-part');
-      const profilePart = document.querySelector('.profile-part');
-      if (registrationPart && profilePart) {
-        registrationPart.style.display = 'none';
-        profilePart.style.display = 'block';
-      }
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/user/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
 
-      // Redirect to index.html
-      window.location.href = 'index2.html';
-    })
-    .catch((err) => {
-      console.error(err);
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+
+            const data = await response.json();
+            console.log('Registration Success:', data);
+
+            window.location.href = "index.html";
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle errors (e.g., show error message to the user)
+        }
     });
-  });
-});
