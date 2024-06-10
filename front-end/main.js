@@ -2,7 +2,7 @@ let deleteTaskId = null; // Global variable to store the ID of the task to be de
 
 // Function to fetch tasks from the API
 function fetchTasks() {
-    fetch('http://127.0.0.1:8000/api/todos/')
+    fetch('https://todo-app-backend-08b7.onrender.com/api/todos/')
     .then(response => response.json())
     .then(data => {
         const tasksDiv = document.getElementById('tasks');
@@ -50,7 +50,7 @@ document.getElementById('save-modal-task').addEventListener('click', () => {
     const editedTitle = document.getElementById('title').innerHTML; // Get edited title
     const editedBody = document.getElementById('modal-task-input').value; // Get edited body
 
-    fetch(`http://127.0.0.1:8000/api/todos/${editedTaskId}/`, {
+    fetch(`https://todo-app-backend-08b7.onrender.com/api/todos/${editedTaskId}/`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -85,7 +85,7 @@ function openDeleteModal(id) {
 // Function to delete a task
 document.getElementById('confirm-delete').addEventListener('click', () => {
     if (deleteTaskId) {
-        fetch(`http://127.0.0.1:8000/api/todos/${deleteTaskId}/`, {
+        fetch(`https://todo-app-backend-08b7.onrender.com/api/todos/${deleteTaskId}/`, {
             method: 'DELETE'
         })
         .then(response => {
@@ -115,7 +115,7 @@ document.getElementById('create-task-form').addEventListener('submit', function(
     const title = document.getElementById('create-task-title').value;
     const body = document.getElementById('create-task-body').value;
 
-    fetch('http://127.0.0.1:8000/api/todos/', {
+    fetch('https://todo-app-backend-08b7.onrender.com/api/todos/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

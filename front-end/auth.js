@@ -15,7 +15,7 @@
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/user/register/', {
+            const response = await fetch('https://todo-app-backend-08b7.onrender.com/api/user/register/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
